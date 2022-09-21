@@ -13,7 +13,11 @@ import org.aspectj.lang.reflect.MethodSignature;
 import org.aspectj.lang.reflect.SourceLocation;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.*;
 import java.util.*;
@@ -31,11 +35,17 @@ public class LogHandler {
         //日志
         StringBuffer sb = new StringBuffer();
 
+        //ip相关日志
+        // 获取请求信息
+        HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
+        String host = request.getRemoteAddr();
+        sb.append("【客户端地址："+host);
+
         //方法类相关日志
         MethodSignature signature = (MethodSignature) pjp.getSignature();
         String name = signature.getName();
         String cla = signature.getDeclaringTypeName();
-        sb.append("【类:" + cla + " 方法:" + name + " ");
+        sb.append(" 类:" + cla + " 方法:" + name + " ");
 
 
         Object[] args = pjp.getArgs();
@@ -63,11 +73,11 @@ public class LogHandler {
      * @param ret
      */
     private void logRepAdd(StringBuffer sb, Object ret) {
-        sb.append("出参:【");
+//        sb.append("出参:{");
         Class<?> clz = ret.getClass();
         Log anno = clz.getAnnotation(Log.class);
         logObjAdd(sb, ret, clz, anno, false);
-        sb.append("】");
+//        sb.append("}");
     }
 
     /**
@@ -132,7 +142,7 @@ public class LogHandler {
             arrayFieldHandle(sb, filedName, arg, msg);
         }else{
             //既不是数组类型，也不是集合类型
-            normalFeildHandle(sb, arg, msg, msg == null, filedName);
+            normalFeildHandle(sb, arg, msg, filedName);
         }
     }
 
@@ -202,7 +212,7 @@ public class LogHandler {
                 colFieldHandle(sb, fieldName, (Collection<?>) val, msg);
             } else {
                 //既不是数组类型，也不是集合类型
-                normalFeildHandle(sb, val, msg, msg == null, fieldName);
+                normalFeildHandle(sb, val, msg,  fieldName);
             }
         }
     }
@@ -254,11 +264,10 @@ public class LogHandler {
      * @param sb
      * @param val
      * @param msg
-     * @param b
      * @param name
      */
-    private void normalFeildHandle(StringBuffer sb, Object val, String msg, boolean b, String name) {
-        sb.append(b ? msg : name)
+    private void normalFeildHandle(StringBuffer sb, Object val, String msg, String name) {
+        sb.append(msg == null ? name : msg)
                 .append(":")
                 .append(val)
                 .append(" ");
