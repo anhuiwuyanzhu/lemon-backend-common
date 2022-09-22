@@ -30,7 +30,7 @@ public class LogHandler {
     }
 
     @Around(value = "pointCut()")
-    public void around(ProceedingJoinPoint pjp) throws Throwable {
+    public Object around(ProceedingJoinPoint pjp) throws Throwable {
         long startTime = System.currentTimeMillis();
         //日志
         StringBuffer sb = new StringBuffer();
@@ -63,7 +63,7 @@ public class LogHandler {
         long timeConsuming = endTime - startTime;
         sb.append("耗时:" + timeConsuming + "毫秒" + "】");
         log.info(sb.toString());
-
+        return ret;
     }
 
     /**
