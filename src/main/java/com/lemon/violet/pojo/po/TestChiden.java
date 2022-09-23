@@ -1,4 +1,4 @@
-package com.lemon.violet.pojo.rto;
+package com.lemon.violet.pojo.po;
 
 import com.lemon.violet.annotation.Log;
 import com.lemon.violet.annotation.LogField;
