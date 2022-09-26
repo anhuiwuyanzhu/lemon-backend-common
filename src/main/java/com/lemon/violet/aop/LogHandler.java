@@ -12,6 +12,7 @@ import org.aspectj.lang.annotation.Pointcut;
 import org.aspectj.lang.reflect.MethodSignature;
 import org.aspectj.lang.reflect.SourceLocation;
 import org.springframework.stereotype.Component;
+import org.springframework.util.ObjectUtils;
 import org.springframework.util.StringUtils;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
@@ -55,7 +56,9 @@ public class LogHandler {
         Method method = signature.getMethod();
         logReqAdd(sb, args, method);
         Object ret = pjp.proceed();
-        logRepAdd(sb, ret);
+        if(!ObjectUtils.isEmpty(ret)) {
+            logRepAdd(sb, ret);
+        }
 
 
         //耗时统计

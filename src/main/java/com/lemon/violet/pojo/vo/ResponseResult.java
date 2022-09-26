@@ -15,18 +15,18 @@ import java.io.Serializable;
 public class ResponseResult<T> implements Serializable {
 
     @LogField("响应码")
-    private String code;
+    private Integer code;
 
     @LogRef("响应体")
-    private T ret;
+    private T data;
 
     @LogField("响应信息")
     private String msg;
 
 
-    private ResponseResult(String code, T obj, String msg) {
+    private ResponseResult(Integer code, T obj, String msg) {
         this.code = code;
-        this.ret = obj;
+        this.data = obj;
         this.msg = msg;
     }
 
@@ -38,11 +38,11 @@ public class ResponseResult<T> implements Serializable {
 
     //失败响应
     public static ResponseResult fail(CodeEnum codeEnum){
-        return new ResponseResult(codeEnum.getCode(), null, codeEnum.getCode());
+        return new ResponseResult(codeEnum.getCode(), null, codeEnum.getMsg());
     }
 
     //自定义响应
-    public static <T> ResponseResult exception(String code,T obj,String msg){
+    public static <T> ResponseResult exception(Integer code,T obj,String msg){
         return new ResponseResult(code,obj, msg);
     }
 }
