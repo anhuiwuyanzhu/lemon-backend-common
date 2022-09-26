@@ -4,9 +4,16 @@ import lombok.Getter;
 
 @Getter
 public enum CodeEnum {
-    RESULT_200("200","请求成功"),
-    RESULT_400("400","请求失败"),
-    RESULT_500("500","服务器异常");
+    //成功
+    SUCCESS("200","操作成功"),
+    //登录
+    NEED_LOGIN("401","需要登录后操作"),
+    NO_OPERATOR_AUTH("403","无权限操作"),
+    SYSTEM_ERROR("500","出现错误"),
+    USERNAME_EXIST("501","用户名已存在"),
+    PHONE_NUMBER_EXIST("502","手机号已存在"),
+    REQUIRE_USERNAME("504","必须填写用户名"),
+    LOGIN_ERROR("505","用户名或密码错误");
 
     private String code;
     private String msg;
