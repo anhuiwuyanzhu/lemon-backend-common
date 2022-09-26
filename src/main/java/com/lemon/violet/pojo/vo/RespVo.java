@@ -36,4 +36,9 @@ public class RespVo <T> {
     public static  RespVo fail(String msg){
         return new RespVo(CodeEnum.RESULT_400.getCode(), null, msg);
     }
+
+    //异常响应
+    public static RespVo exception(){
+        return new RespVo(CodeEnum.RESULT_500.getCode(),null, CodeEnum.RESULT_500.getMsg());
+    }
 }
