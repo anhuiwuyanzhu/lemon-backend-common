@@ -42,7 +42,11 @@ public class ResponseResult<T> implements Serializable {
     }
 
     //自定义响应
-    public static <T> ResponseResult exception(Integer code,T obj,String msg){
+    public static <T> ResponseResult customize(Integer code,T obj,String msg){
         return new ResponseResult(code,obj, msg);
     }
+
+
+
+
 }
