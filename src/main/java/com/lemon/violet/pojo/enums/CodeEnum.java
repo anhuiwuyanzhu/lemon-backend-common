@@ -11,6 +11,8 @@ public enum CodeEnum {
     NO_OPERATOR_AUTH(403,"无权限操作"),
     COMMENT_NOT_CONTENT(406,"没有评论内容"),
     SYSTEM_ERROR(500,"出现错误"),
+    IMG_UPLOAD_FAIL(506,"图片上传失败"),
+    IMG_TYPE_NOT_MATCHING(507,"图片上传失败"),
     USERNAME_EXIST(501,"用户名已存在"),
     PHONE_NUMBER_EXIST(502,"手机号已存在"),
     REQUIRE_USERNAME(504,"必须填写用户名"),
