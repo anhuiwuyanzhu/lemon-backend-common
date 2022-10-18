@@ -47,6 +47,10 @@ public class ResponseResult<T> implements Serializable {
     }
 
 
+    //校验错误
+    public static <T> ResponseResult checkFail(String obj){
+        return new ResponseResult(202,null,obj);
+    }
 
 
 }
